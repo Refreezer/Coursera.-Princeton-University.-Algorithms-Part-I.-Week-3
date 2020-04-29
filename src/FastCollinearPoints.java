@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BruteCollinearPoints {
+public class FastCollinearPoints {
+
     private LineSegment[] lineSegments;
 
     private static Point[] deduplication(Point[] points) {
@@ -27,7 +28,7 @@ public class BruteCollinearPoints {
         //end of deduplication
     }
 
-    public BruteCollinearPoints(Point[] points)    // finds all line segments containing 4 points
+    public FastCollinearPoints(Point[] points)    // finds all line segments containing 4 points
     {
         if (points == null) throw new IllegalArgumentException();
 

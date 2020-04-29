@@ -8,13 +8,11 @@
  *
  ******************************************************************************/
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Point implements Comparable<Point> {
 
@@ -153,17 +151,33 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        Point[] points = new Point[20];
+        Point[] points = new Point[200];
         Random r = new Random();
         for (int i = 0; i < points.length; ++i) {
-            points[i] = new Point(r.nextInt(10), r.nextInt(10));
+            points[i] = new Point(r.nextInt(100), r.nextInt(100));
         }
 
-        BruteCollinearPoints b = new BruteCollinearPoints(points);
+        FastCollinearPoints b = new FastCollinearPoints(points);
+
         for (LineSegment segment : b.segments()) {
             System.out.println(segment.toString());
         }
         // draw the points
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(-10, 100);
+        StdDraw.setYscale(-10, 100);
+        for (Point p : points) {
+            p.draw();
+        }
+        StdDraw.show();
+
+        // print and draw the line segments
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        for (LineSegment segment : collinear.segments()) {
+            StdOut.println(segment);
+            segment.draw();
+        }
+        StdDraw.show();
 
 
     }

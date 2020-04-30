@@ -1,15 +1,3 @@
-/*************************************************************************
- *  Compilation:  javac LineSegment.java
- *  Execution:    none
- *  Dependencies: Point.java
- *
- *  An immutable data type for Line segments in the plane.
- *  For use on Coursera, Algorithms Part I programming assignment.
- *
- *  DO NOT MODIFY THIS CODE.
- *
- *************************************************************************/
-
 public class LineSegment {
     private final Point p;   // one endpoint of this line segment
     private final Point q;   // the other endpoint of this line segment
@@ -23,7 +11,7 @@ public class LineSegment {
      *                              is <tt>null</tt>
      */
     public LineSegment(Point p, Point q) {
-        if (p == null || q == null) {
+        if (p == null || q == null || p.compareTo(q) == 0) {
             throw new NullPointerException("argument is null");
         }
         this.p = p;
@@ -58,7 +46,7 @@ public class LineSegment {
      * @throws UnsupportedOperationException if called
      */
     public int hashCode() {
-        throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException();
     }
 
 }

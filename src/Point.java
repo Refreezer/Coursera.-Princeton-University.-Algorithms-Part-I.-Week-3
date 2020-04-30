@@ -1,23 +1,13 @@
-/******************************************************************************
- *  Compilation:  javac Point.java
- *  Execution:    java Point
- *  Dependencies: none
- *
- *  An immutable data type for points in the plane.
- *  For use on Coursera, Algorithms Part I programming assignment.
- *
- ******************************************************************************/
-
-import java.util.Comparator;
-import java.util.Random;
-
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Comparator;
+
 public class Point implements Comparable<Point> {
 
-    private final Integer x;     // x-coordinate of this point
-    private final Integer y;     // y-coordinate of this point
+    private final int x;     // x-coordinate of this point
+    private final int y;     // y-coordinate of this point
 
     /**
      * Initializes a new point.
@@ -63,10 +53,10 @@ public class Point implements Comparable<Point> {
      */
     public double slopeTo(Point that) {
 
-        double deltaY = y.doubleValue() - that.y.doubleValue();
-        double deltaX = x.doubleValue() - that.x.doubleValue();
+        double deltaY = (double) y - (double) that.y;
+        double deltaX = (double) x - (double) that.x;
         if (deltaY == 0 && deltaX == 0) return Double.NEGATIVE_INFINITY;
-        if (deltaY == 0) return (double) +0;
+        if (deltaY == 0) return 0;
         else if (deltaX == 0) return Double.POSITIVE_INFINITY;
         else return deltaY / deltaX;
 
@@ -85,10 +75,10 @@ public class Point implements Comparable<Point> {
      * argument point
      */
     public int compareTo(Point that) {
-        if (y.compareTo(that.y) == 0)
-            return x.compareTo(that.x);
+        if (y - (that.y) == 0)
+            return Integer.compare(x, that.x);
         else
-            return y.compareTo(that.y);
+            return Integer.compare(y, that.y);
     }
 
     /**
@@ -98,7 +88,6 @@ public class Point implements Comparable<Point> {
      * @return the Comparator that defines this ordering on points
      */
     public Comparator<Point> slopeOrder() {
-        Point invokingPoint = new Point(0, 0);
         return new PointComparator();
     }
 
@@ -121,51 +110,27 @@ public class Point implements Comparable<Point> {
         return "(" + x + ", " + y + ")";
     }
 
-    private void out(Point[] p)//remove
-    {
-        StdDraw.enableDoubleBuffering();
-        StdDraw.setXscale(-10, 10);
-        StdDraw.setYscale(-10, 10);
-        Point.this.draw();
-        Point zero = new Point(0, 0);
-        for (Point point : p) {
-
-            point.draw();
-        }
-        StdDraw.show();
-        for (Point point : p) {
-            System.out.print(Point.this.toString()  + " Slope to " + point.toString() + " " + Point.this.slopeTo(point));
-
-            LineSegment seg = new LineSegment(Point.this, point);
-            seg.draw();
-            System.out.println();
-        }
-
-        StdDraw.show();
-
-
-        System.out.println();
-    }
 
     /**
      * Unit tests the Point data type.
      */
+
     public static void main(String[] args) {
-        Point[] points = new Point[200];
-        Random r = new Random();
-        for (int i = 0; i < points.length; ++i) {
-            points[i] = new Point(r.nextInt(100), r.nextInt(100));
+
+        // read the n points from a file
+        In in = new In(args[0]);
+        int n = in.readInt();
+        Point[] points = new Point[n];
+        for (int i = 0; i < n; i++) {
+            int x = in.readInt();
+            int y = in.readInt();
+            points[i] = new Point(x, y);
         }
 
-        FastCollinearPoints b = new FastCollinearPoints(points);
-
-        for (LineSegment segment : b.segments()) {
-            System.out.println(segment.toString());
-        }
         // draw the points
         StdDraw.enableDoubleBuffering();
-        StdDraw.setXscale(-10, 100);
-        StdDraw.setYscale(-10, 100);
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
         for (Point p : points) {
             p.draw();
         }
@@ -178,7 +143,6 @@ public class Point implements Comparable<Point> {
             segment.draw();
         }
         StdDraw.show();
-
-
     }
+
 }
